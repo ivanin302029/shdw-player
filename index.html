@@ -33,14 +33,13 @@
         <div id="episode-title" class="shdw-subtitle">Épisode 01 - VOSTFR</div>
     </div>
     <div class="shdw-player-wrapper" id="shdw-container">
-        <!-- Lien vidéo public hautement compatible pour le test -->
-        <video id="main-video" playsinline src="https://googleapis.com"></video>
+        <video id="main-video" playsinline></video>
         <div class="shdw-controls">
             <button class="control-btn" id="play-btn">▶</button>
             <div class="progress-bar-container" id="progress-container">
                 <div class="progress-filled" id="progress-bar"></div>
                 <div class="shdw-tooltip" id="shdw-tooltip">
-                    <video id="preview-video" muted playsinline src="https://googleapis.com"></video>
+                    <video id="preview-video" muted playsinline></video>
                     <div class="shdw-tooltip-time" id="shdw-tooltip-time">0:00</div>
                 </div>
             </div>
@@ -60,6 +59,14 @@
         const tTxt = document.getElementById('time-txt'), ctn = document.getElementById('shdw-container');
         const tooltip = document.getElementById('shdw-tooltip'), pVid = document.getElementById('preview-video'), tTime = document.getElementById('shdw-tooltip-time');
         let ep = 1;
+
+        // AUTOMATISATION DU CHARGEMENT DES VIDÉOS DE TEST SELON L'ANIME CLIQUÉ
+        const urlParams = new URLSearchParams(window.location.search);
+        const videoUrl = urlParams.get('play');
+        if (videoUrl) {
+            v.src = videoUrl;
+            pVid.src = videoUrl;
+        }
 
         function tPlay() { if(v.paused) { v.play().catch(()=>{}); pBtn.innerText='⏸'; } else { v.pause(); pBtn.innerText='▶'; } }
         pBtn.addEventListener('click', tPlay); v.addEventListener('click', tPlay);
