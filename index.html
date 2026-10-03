@@ -30,16 +30,16 @@
         <div class="shdw-subtitle">Épisode 01 - VOSTFR</div>
     </div>
     <div class="shdw-player-wrapper" id="shdw-container">
-        <!-- Appel direct des routes Express sécurisées pour la vidéo et les sous-titres -->
-        <video id="main-video" playsinline src="/video-stream">
-            <track id="main-track" kind="captions" label="Français" srclang="fr" src="/subtitles.vtt" default>
+        <!-- Remplacement par des liens HTTP publics pour que Render puisse charger la vidéo de test -->
+        <video id="main-video" playsinline src="https://googleapis.com">
+            <track id="main-track" kind="captions" label="Français" srclang="fr" src="https://githubusercontent.com" default>
         </video>
         <div class="shdw-controls">
             <button class="control-btn" id="play-btn">▶</button>
             <div class="progress-bar-container" id="progress-container">
                 <div class="progress-filled" id="progress-bar"></div>
                 <div class="shdw-tooltip" id="shdw-tooltip">
-                    <video id="preview-video" muted playsinline src="/video-stream"></video>
+                    <video id="preview-video" muted playsinline src="https://googleapis.com"></video>
                     <div class="shdw-tooltip-time" id="shdw-tooltip-time">0:00</div>
                 </div>
             </div>
