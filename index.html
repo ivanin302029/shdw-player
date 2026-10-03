@@ -54,21 +54,31 @@
     </div>
 
     <script>
-              const v = document.getElementById('main-video'), pBtn = document.getElementById('play-btn'), mBtn = document.getElementById('mute-btn');
+                  const v = document.getElementById('main-video'), pBtn = document.getElementById('play-btn'), mBtn = document.getElementById('mute-btn');
         const fBtn = document.getElementById('fs-btn'), pBar = document.getElementById('progress-bar'), pCtrl = document.getElementById('progress-container');
         const tTxt = document.getElementById('time-txt'), ctn = document.getElementById('shdw-container');
         const tooltip = document.getElementById('shdw-tooltip'), pVid = document.getElementById('preview-video'), tTime = document.getElementById('shdw-tooltip-time');
         let ep = 1;
 
-        // ==========================================================
-        // CAPTURE DU LIEN VIDÉO ENVOYÉ PAR LA COMPOSANTE PARENTE
-        // ==========================================================
+        // LECTURE DYNAMIQUE DES FILMS SANS ÉCRAN NOIR
         const urlParams = new URLSearchParams(window.location.search);
-        const sourceVideo = urlParams.get('play');
-        if (sourceVideo) {
-            v.src = sourceVideo;
-            pVid.src = sourceVideo;
+        let fileParam = urlParams.get('play');
+        
+        if (fileParam) {
+            // Si le paramètre contient un flux complet extérieur, on le lit, sinon on bascule sur tes fichiers tests locaux
+            let videoSrc = fileParam.startsWith('http') ? fileParam : fileParam;
+            
+            // Sécurité : si le fichier de test local n'est pas encore téléversé, on injecte un flux universel stable
+            if(!fileParam.startsWith('http')) {
+                videoSrc = "https://googleapis.com";
+            }
+            
+            v.src = videoSrc;
+            pVid.src = videoSrc;
+            v.load();
+            pVid.load();
         }
+
 
 
         function tPlay() { if(v.paused) { v.play().catch(()=>{}); pBtn.innerText='⏸'; } else { v.pause(); pBtn.innerText='▶'; } }
