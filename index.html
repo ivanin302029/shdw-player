@@ -54,19 +54,22 @@
     </div>
 
     <script>
-        const v = document.getElementById('main-video'), pBtn = document.getElementById('play-btn'), mBtn = document.getElementById('mute-btn');
+              const v = document.getElementById('main-video'), pBtn = document.getElementById('play-btn'), mBtn = document.getElementById('mute-btn');
         const fBtn = document.getElementById('fs-btn'), pBar = document.getElementById('progress-bar'), pCtrl = document.getElementById('progress-container');
         const tTxt = document.getElementById('time-txt'), ctn = document.getElementById('shdw-container');
         const tooltip = document.getElementById('shdw-tooltip'), pVid = document.getElementById('preview-video'), tTime = document.getElementById('shdw-tooltip-time');
         let ep = 1;
 
-        // AUTOMATISATION DU CHARGEMENT DES VIDÉOS DE TEST SELON L'ANIME CLIQUÉ
+        // ==========================================================
+        // CAPTURE DU LIEN VIDÉO ENVOYÉ PAR LA COMPOSANTE PARENTE
+        // ==========================================================
         const urlParams = new URLSearchParams(window.location.search);
-        const videoUrl = urlParams.get('play');
-        if (videoUrl) {
-            v.src = videoUrl;
-            pVid.src = videoUrl;
+        const sourceVideo = urlParams.get('play');
+        if (sourceVideo) {
+            v.src = sourceVideo;
+            pVid.src = sourceVideo;
         }
+
 
         function tPlay() { if(v.paused) { v.play().catch(()=>{}); pBtn.innerText='⏸'; } else { v.pause(); pBtn.innerText='▶'; } }
         pBtn.addEventListener('click', tPlay); v.addEventListener('click', tPlay);
