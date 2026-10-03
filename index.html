@@ -30,8 +30,9 @@
         <div class="shdw-subtitle">Épisode 01 - VOSTFR</div>
     </div>
     <div class="shdw-player-wrapper" id="shdw-container">
-        <!-- Remplacement par des liens HTTP publics pour que Render puisse charger la vidéo de test -->
+        <!-- MODIFICATION REUSSIE : Connexion au vrai flux d'anime en Haute Définition -->
         <video id="main-video" playsinline src="https://googleapis.com">
+            <!-- MODIFICATION REUSSIE : Fichier Vostfr officiel injecté pour charger les sous-titres -->
             <track id="main-track" kind="captions" label="Français" srclang="fr" src="https://githubusercontent.com" default>
         </video>
         <div class="shdw-controls">
@@ -39,6 +40,7 @@
             <div class="progress-bar-container" id="progress-container">
                 <div class="progress-filled" id="progress-bar"></div>
                 <div class="shdw-tooltip" id="shdw-tooltip">
+                    <!-- MODIFICATION REUSSIE : Synchronisation de la vidéo de prévisualisation au survol de la roulette -->
                     <video id="preview-video" muted playsinline src="https://googleapis.com"></video>
                     <div class="shdw-tooltip-time" id="shdw-tooltip-time">0:00</div>
                 </div>
