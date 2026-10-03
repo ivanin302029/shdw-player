@@ -1,0 +1,98 @@
+/* ---- Thème Officiel du Lecteur SHDW ---- */
+
+body {
+    background-color: #08090a;
+    color: #ffffff;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    box-sizing: border-box;
+}
+
+.shdw-header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.shdw-title {
+    font-size: 2.2rem;
+    font-weight: 800;
+    letter-spacing: 3px;
+    color: #ffffff;
+    text-shadow: 0 0 10px rgba(155, 90, 165, 0.5);
+}
+
+.shdw-subtitle {
+    font-size: 1.1rem;
+    color: #9b5aa5;
+    margin-top: 5px;
+    font-weight: 600;
+}
+
+/* Redimensionnement et centrage du lecteur pour corriger le bug d'affichage */
+.shdw-container {
+    width: 100%;
+    max-width: 850px;
+    box-shadow: 0 20px 50px rgba(0, 0, 0, 0.9);
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid rgba(155, 90, 165, 0.2);
+    background: #000;
+}
+
+/* Force la vidéo à remplir son conteneur */
+#shdw-core {
+    width: 100%;
+    height: auto;
+}
+
+/* Zone des boutons sous le lecteur */
+.shdw-navigation {
+    display: flex;
+    gap: 20px;
+    margin-top: 20px;
+    width: 100%;
+    max-width: 850px;
+    justify-content: space-between;
+}
+
+.shdw-btn {
+    background-color: #111215;
+    color: #ffffff;
+    border: 2px solid #9b5aa5;
+    padding: 12px 24px;
+    font-size: 1rem;
+    font-weight: 600;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    flex: 1;
+    max-width: 200px;
+}
+
+.shdw-btn:hover {
+    background-color: #9b5aa5;
+    box-shadow: 0 0 15px rgba(155, 90, 165, 0.6);
+    transform: translateY(-2px);
+}
+
+.shdw-btn:disabled {
+    border-color: #333;
+    color: #555;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+/* Configuration de la couleur Violette de SHDW sur Plyr */
+:root {
+    --plyr-color-main: #9b5aa5;
+    --plyr-video-background: #000000;
+    --plyr-menu-background: #111215;
+    --plyr-menu-color: #ffffff;
+}
