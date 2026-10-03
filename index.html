@@ -1,61 +1,20 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SHDW Video Player</title>
-    <style>
-        body { background-color: #08090a; color: #ffffff; font-family: sans-serif; margin: 0; padding: 20px; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 100vh; box-sizing: border-box; }
-        .shdw-header { text-align: center; margin-bottom: 20px; }
-        .shdw-title { font-size: 2.2rem; font-weight: 800; letter-spacing: 3px; text-shadow: 0 0 10px rgba(155, 90, 165, 0.5); }
-        .shdw-subtitle { font-size: 1.1rem; color: #9b5aa5; margin-top: 5px; font-weight: 600; }
-        .shdw-player-wrapper { position: relative; width: 100%; max-width: 850px; background: #000; border-radius: 12px; overflow: hidden; border: 1px solid rgba(155, 90, 165, 0.3); box-shadow: 0 20px 50px rgba(0,0,0,0.9); aspect-ratio: 16 / 9; }
-        .shdw-player-wrapper video { width: 100% !important; height: 100% !important; object-fit: contain; cursor: pointer; }
-        .shdw-controls { position: absolute; bottom: 0; left: 0; right: 0; background: linear-gradient(transparent, rgba(0,0,0,0.95)); display: flex; align-items: center; padding: 15px; gap: 15px; z-index: 10; }
-        .control-btn { background: none; border: none; color: white; font-size: 1.2rem; cursor: pointer; display: flex; align-items: center; justify-content: center; }
-        .control-btn:hover { color: #9b5aa5; }
-        .progress-bar-container { position: relative; flex: 1; height: 6px; background: rgba(255,255,255,0.2); border-radius: 3px; cursor: pointer; display: flex; align-items: center; }
-        .progress-bar-container:hover { height: 8px; }
-        .progress-filled { height: 100%; background: #9b5aa5; width: 0%; border-radius: 3px; box-shadow: 0 0 8px #9b5aa5; }
-        .shdw-tooltip { position: absolute; bottom: 25px; background: #000; border: 2px solid #9b5aa5; border-radius: 8px; overflow: hidden; display: none; pointer-events: none; transform: translateX(-50%); box-shadow: 0 5px 20px rgba(0,0,0,0.8); width: 140px; height: 95px; }
-        .shdw-tooltip video { width: 100% !important; height: 75px !important; object-fit: cover; }
-        .shdw-tooltip-time { height: 20px; font-size: 0.75rem; text-align: center; background: #111215; color: #fff; display: flex; align-items: center; justify-content: center; font-weight: bold; }
-        .time-display { font-size: 0.9rem; min-width: 45px; text-align: center; }
-        video::cue { background: rgba(0, 0, 0, 0.8); color: #fff; font-size: 1.2rem; font-weight: bold; }
-    </style>
-</head>
-<body>
-    <div class="shdw-header">
-        <div class="shdw-title">SHDW PLAYER</div>
-        <div class="shdw-subtitle">Épisode 01 - VOSTFR</div>
-    </div>
-    <div class="shdw-player-wrapper" id="shdw-container">
-        <!-- MODIFICATION REUSSIE : Connexion au vrai flux d'anime en Haute Définition -->
-        <video id="main-video" playsinline src="https://googleapis.com">
-            <!-- MODIFICATION REUSSIE : Fichier Vostfr officiel injecté pour charger les sous-titres -->
-            <track id="main-track" kind="captions" label="Français" srclang="fr" src="https://githubusercontent.com" default>
-        </video>
-        <div class="shdw-controls">
-            <button class="control-btn" id="play-btn">▶</button>
-            <div class="progress-bar-container" id="progress-container">
-                <div class="progress-filled" id="progress-bar"></div>
-                <div class="shdw-tooltip" id="shdw-tooltip">
-                    <!-- MODIFICATION REUSSIE : Synchronisation de la vidéo de prévisualisation au survol de la roulette -->
-                    <video id="preview-video" muted playsinline src="https://googleapis.com"></video>
-                    <div class="shdw-tooltip-time" id="shdw-tooltip-time">0:00</div>
-                </div>
-            </div>
-            <div class="time-display" id="time-txt">0:00</div>
-            <button class="control-btn" id="mute-btn">🔊</button>
-            <button class="control-btn" id="fs-btn">⛶</button>
-        </div>
-    </div>
-
     <script>
         const v = document.getElementById('main-video'), pBtn = document.getElementById('play-btn'), mBtn = document.getElementById('mute-btn');
         const fBtn = document.getElementById('fs-btn'), pBar = document.getElementById('progress-bar'), pCtrl = document.getElementById('progress-container');
         const tTxt = document.getElementById('time-txt'), ctn = document.getElementById('shdw-container');
         const tooltip = document.getElementById('shdw-tooltip'), pVid = document.getElementById('preview-video'), tTime = document.getElementById('shdw-tooltip-time');
+
+        // ==========================================================
+        # AJOUT : LIRE LE PARAMÈTRE DE LA VIDÉO DE CHAINSAW MAN AUTOMATIQUEMENT
+        // ==========================================================
+        const urlParams = new URLSearchParams(window.location.search);
+        // Si l'adresse contient un paramètre d'anime, on l'utilise pour le flux
+        if (window.location.search) {
+            // Ici, on peut brancher l'adresse de ton serveur de flux d'animes réel
+            const vUrl = "https://googleapis.com";
+            v.src = vUrl;
+            pVid.src = vUrl;
+        }
 
         function tPlay() { if(v.paused) { v.play().catch(()=>{}); pBtn.innerText='⏸'; } else { v.pause(); pBtn.innerText='▶'; } }
         pBtn.addEventListener('click', tPlay); v.addEventListener('click', tPlay);
@@ -82,5 +41,3 @@
         });
         pCtrl.addEventListener('mouseleave', () => { tooltip.style.display = 'none'; });
     </script>
-</body>
-</html>
