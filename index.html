@@ -21,19 +21,20 @@
         .shdw-tooltip video { width: 100% !important; height: 75px !important; object-fit: cover; }
         .shdw-tooltip-time { height: 20px; font-size: 0.75rem; text-align: center; background: #111215; color: #fff; display: flex; align-items: center; justify-content: center; font-weight: bold; }
         .time-display { font-size: 0.9rem; min-width: 45px; text-align: center; }
-        video::cue { background: rgba(0, 0, 0, 0.8); color: #fff; font-size: 1.2rem; font-weight: bold; }
+        .shdw-navigation { display: flex; gap: 20px; margin-top: 20px; width: 100%; max-width: 850px; justify-content: space-between; }
+        .shdw-btn { background-color: #111215; color: #ffffff; border: 2px solid #9b5aa5; padding: 12px 24px; font-size: 1rem; font-weight: 600; border-radius: 8px; cursor: pointer; flex: 1; max-width: 200px; }
+        .shdw-btn:hover { background-color: #9b5aa5; box-shadow: 0 0 15px rgba(155, 90, 165, 0.6); }
+        .shdw-btn:disabled { border-color: #333; color: #555; cursor: not-allowed; }
     </style>
 </head>
 <body>
     <div class="shdw-header">
         <div class="shdw-title">SHDW PLAYER</div>
-        <div class="shdw-subtitle">Épisode 01 - VOSTFR</div>
+        <div id="episode-title" class="shdw-subtitle">Épisode 01 - VOSTFR</div>
     </div>
     <div class="shdw-player-wrapper" id="shdw-container">
-        <!-- Remplacement par des liens HTTP publics pour que Render puisse charger la vidéo de test -->
-        <video id="main-video" playsinline src="https://googleapis.com">
-            <track id="main-track" kind="captions" label="Français" srclang="fr" src="https://githubusercontent.com" default>
-        </video>
+        <!-- Lien vidéo public hautement compatible pour le test -->
+        <video id="main-video" playsinline src="https://googleapis.com"></video>
         <div class="shdw-controls">
             <button class="control-btn" id="play-btn">▶</button>
             <div class="progress-bar-container" id="progress-container">
@@ -48,12 +49,17 @@
             <button class="control-btn" id="fs-btn">⛶</button>
         </div>
     </div>
+    <div class="shdw-navigation">
+        <button class="shdw-btn" id="btn-prev">⏮ Ép. Précédent</button>
+        <button class="shdw-btn" id="btn-next">Ép. Suivant ⏭</button>
+    </div>
 
     <script>
         const v = document.getElementById('main-video'), pBtn = document.getElementById('play-btn'), mBtn = document.getElementById('mute-btn');
         const fBtn = document.getElementById('fs-btn'), pBar = document.getElementById('progress-bar'), pCtrl = document.getElementById('progress-container');
         const tTxt = document.getElementById('time-txt'), ctn = document.getElementById('shdw-container');
         const tooltip = document.getElementById('shdw-tooltip'), pVid = document.getElementById('preview-video'), tTime = document.getElementById('shdw-tooltip-time');
+        let ep = 1;
 
         function tPlay() { if(v.paused) { v.play().catch(()=>{}); pBtn.innerText='⏸'; } else { v.pause(); pBtn.innerText='▶'; } }
         pBtn.addEventListener('click', tPlay); v.addEventListener('click', tPlay);
@@ -79,6 +85,12 @@
             if (!isNaN(t) && t >= 0) { tooltip.style.left = `${x}px`; tooltip.style.display = 'block'; pVid.currentTime = t; tTime.innerText = fTime(t); }
         });
         pCtrl.addEventListener('mouseleave', () => { tooltip.style.display = 'none'; });
+
+        const bP = document.getElementById('btn-prev'), bN = document.getElementById('btn-next'), eT = document.getElementById('episode-title');
+        function up() { eT.innerText=`Épisode ${ep<10?'0'+ep:ep} - VOSTFR`; bP.disabled=(ep===1); bN.disabled=(ep===12); }
+        bP.addEventListener('click', () => { if(ep>1) { ep--; v.play().catch(()=>{}); pBtn.innerText='⏸'; up(); } });
+        bN.addEventListener('click', () => { if(ep<12) { ep++; v.play().catch(()=>{}); pBtn.innerText='⏸'; up(); } });
+        up();
     </script>
 </body>
 </html>
